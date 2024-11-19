@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+  </head>
+
+  <body>
+    <div id="root">
+      <h1 v-show="n===1">react</h1>
+      <h1 v-show="n===2">an</h1>
+      <h1 v-show="n===3">vue</h1>
+      <button @click="nadd"></button>
+    </div>
+  </body>
+  <script type="text/javascript">
+    Vue.config.productionTip = false;
+    const vm = new Vue({
+      el: "#root", //代理
+      data: {
+        n: 1,
+        isHot: true,
+      },
+      //计算属性
+      computed: {
+        weather() {
+          //简写形式
+          return this.isHot ? "炎热" : "寒冷";
+        },
+      },
+      methods: {
+        changeWeather() {
+          this.isHot = !this.isHot;
+        },
+        nadd() {
+          this.n++;
+        },
+      },
+      watch: {
+        isHot: {
+          //当isHot发生变化时handler调用
+          handler(newValue, oldValue) {
+            console.log("isHot被修改了", newValue, oldValue);
+          },
+        },
+      },
+    });
+  </script>
+</html>

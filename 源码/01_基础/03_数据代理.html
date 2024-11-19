@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // let number = 18
+      // let Person = {
+      //     name: "Frank",
+      // }
+      // Object.defineProperty(Person, "age", {
+      //     get() { //读取Person.age时调用
+      //         return number
+      //     },
+      //     set(value) { //修改Person.age时调用
+      //         number = value
+      //     }
+      //     //整体思想，把Person.age交给number代理
+      // })
+
+      //数据代理
+      let obj1 = { x: 18 };
+      let obj2 = { y: 28 };
+      //把obj1的x属性交给obj2代理
+      Object.defineProperty(obj2, "x", {
+        get() {
+          return obj1.x;
+        },
+        set(value) {
+          obj1.x = value;
+        },
+      });
+    </script>
+  </body>
+</html>

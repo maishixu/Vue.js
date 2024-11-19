@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+
+</head>
+
+<body>
+    <div id="root">
+        姓：<input type="text" v-model="firstName"> <br>
+        名：<input type="text" v-model="lastName">
+        <h1>{{fullName}}</h1>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+    const vm = new Vue({
+        el: "#root",//代理
+        data: {
+            firstName: "张",
+            lastName: "三"
+        },
+        computed: {
+            fullName: {
+                get() {
+                    return this.firstName + "-" + this.lastName
+                },
+                set(value) { 
+                    this.firstName = value.split("-")[0]
+                    this.lastName = value.split("-")[1]
+                }
+            }
+        }
+    })
+</script>
+
+</html>

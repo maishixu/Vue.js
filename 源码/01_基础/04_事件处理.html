@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+        <!-- $event：当前事件对象  -->
+        <!-- <button @click = "showInfo($event,'message123')">提示信息</button>  -->
+         <a href="https://www.baidu.com" @click.prevent="showInfo">打开百度</a>
+         <input type="text" placeholder="按下回车提示输入" @keyup.enter = "showInfo">
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        new Vue({
+            el: '#root',
+            methods:{
+                showInfo(event){
+                    alert(event.target.value)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

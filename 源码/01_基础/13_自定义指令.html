@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+  </head>
+
+  <body>
+    <div id="root">
+      <button @click="add">点我加一</button>
+      <h1 v-big="n"></h1><!-- 只要directives里出现了v-big就会自动链接"n" binding.value可以取到-->
+      <input type="text" v-fbind:value="n" /> 
+    </div>
+  </body>
+  <script type="text/javascript">
+    Vue.config.productionTip = false;
+    const vm = new Vue({
+      el: "#root", //代理
+      data: {
+        n: 1,
+      },
+      methods: {
+        add() {
+          this.n++;
+        },
+      },
+      directives: {
+        big(element, binding) {
+          //第一个参数：标签实例 第二个参数：绑定的标签对象
+          element.innerText = binding.value * 10;
+        },
+        fbind:{
+            //数据初次绑定成功时
+            bind(element,binding){ element.value = binding.value },
+            //指令所在元素被插入页面时
+            inserted(element,binding){ element.focus() }, //这段代码不能放在bind中，因为初次绑定时页面中还没有input，这时去focus时没用的，所以要在fbind指令的标签刚插入页面的时候再重新执行一次
+            //每次重新模板解析时
+            update(element,binding){ element.value = binding.value },
+        },
+      },
+    });
+  </script>
+</html>

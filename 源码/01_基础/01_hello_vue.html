@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h1>Hello,{{ name }}</h1>
+        <a v-bind:href="url">跳转到百度首页</a>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false // 阻止vue在启动时显示生产提示
+        //创建vue实例
+        new Vue({
+            el: '#root', //el:指定服务的容器对象
+            data: { //存储数据供el指定的容器使用
+                name: "Vue",
+                url:"https://www.baidu.com"
+            }
+        })
+    </script>
+</body>
+
+</html>

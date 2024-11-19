@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+  </head>
+
+  <body>
+    <div id="root">
+      <h1>人员列表</h1>
+      <button @click="sortType=0">原顺序</button>
+      <button @click="sortType=1">降序</button>
+      <button @click="sortType=2">升序</button> <br />
+      <input type="text" placeholder="请输入人员姓名" v-model="keyName" />
+      <ul v-for="(p,index) in filterPerson" :key="p.id">
+        <li>{{p.name}}-{{p.age}}</li>
+      </ul>
+    </div>
+  </body>
+  <script type="text/javascript">
+    Vue.config.productionTip = false;
+    const vm = new Vue({
+      el: "#root", //代理
+      data: {
+        keyName: "",
+        sortType: 0, // 0:原顺序 1：降序 2：升序
+        persons: [
+          { id: "001", name: "张三", age: 18 },
+          { id: "002", name: "李四", age: 22 },
+          { id: "003", name: "王五", age: 20 },
+          { id: "004", name: "刘五", age: 21 },
+        ],
+      },
+      computed: {
+        filterPerson() {
+          const arr = this.persons.filter((p) => {
+            return p.name.indexOf(this.keyName) !== -1;
+          });
+          if (this.sortType) {
+            arr.sort((p1, p2) => {
+              return this.sortType === 1 ? p2.age - p1.age : p1.age - p2.age;
+            });
+          }
+          return arr;
+        },
+      },
+    });
+  </script>
+</html>
