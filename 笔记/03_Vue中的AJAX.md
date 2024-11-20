@@ -88,3 +88,93 @@
 - 使用插件 `Vue.use(vueResourse)`
 - 发送请求 `this.$http.get('url')`
 
+### 4.slot插槽
+
+- 作用：让父组件向子组件指定位置插入html结构，也是一种组件间通信的方式
+
+  > 父组件 -> 子组件 ：只不过通信内容是html结构
+
+#### 4.1.默认插槽
+
+```vue
+父组件中：
+      <Category>
+         <div>html结构1</div>
+      </Category>
+子组件中：
+      <template>
+          <div>
+             <!-- 定义插槽 -->
+             <slot>插槽默认内容...</slot>
+          </div>
+      </template>
+```
+
+#### 4.2.具名插槽
+
+```vue
+父组件中：
+      <Category>
+          <template slot="center">
+            <div>html结构1</div>
+          </template>
+
+          <template v-slot:footer>
+             <div>html结构2</div>
+          </template>
+      </Category>
+子组件中：
+      <template>
+          <div>
+             <!-- 定义插槽 -->
+             <slot name="center">插槽默认内容...</slot>
+             <slot name="footer">插槽默认内容...</slot>
+          </div>
+      </template>
+```
+
+#### 4.3.作用域插槽
+
+- 理解：数据在组件自身（写slot的组件，子组件），但根据数组生成的结构需由组件使用者来决定，可以在子组件中把数据传过去，在父组件中通过`scope`API接收数据
+
+- 具体使用：
+
+  ```vue
+  父组件中：
+     <Category>
+        <template scope="scopeData">
+           <!-- 生成的是ul列表 -->
+           <ul>
+              <li v-for="g in scopeData.games" :key="g">{{g}}</li>
+           </ul>
+        </template>
+     </Category>
+  
+     <Category>
+        <template slot-scope="scopeData">
+           <!-- 生成的是h4标题 -->
+           <h4 v-for="g in scopeData.games" :key="g">{{g}}</h4>
+        </template>
+     </Category>
+  子组件中：
+       <template>
+           <div>
+               <slot :games="games"></slot>
+           </div>
+       </template>
+  
+       <script>
+           export default {
+               name:'Category',
+               props:['title'],
+               //数据在子组件自身
+               data() {
+                   return {
+                       games:['红色警戒','穿越火线','劲舞团','超级玛丽']
+                   }
+               },
+           }
+       </script>
+  ```
+
+- 注意：作用域插槽也可以起名字
