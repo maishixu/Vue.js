@@ -73,6 +73,8 @@
   ```html
   <input type="text" v-model:value="name">
   ```
+  
+  > v-model.number：收到的数据强制转化为数字
 
 #### 3.MVVM模型
 
